@@ -6,13 +6,13 @@ vers <- paste("R package version", meta$Version)
      
 citEntry(entry = "Manual",
 title = "sdml: Supervised Distance Metric Learning with R",
-author = personList(as.person("Xiao Nan"),
-                    as.person("Gao Tao")),
+author = personList(as.person("Gao Tao"),
+                    as.person("Xiao Nan")),
               year = year,
               note = vers,
 
 textVersion =
-paste("Xiao Nan, Gao Tao (",
+paste("Gao Tao, Xiao Nan (",
        year,
        "). sdml: Supervised Distance Metric Learning with R. ",
        vers, ".", sep=""))
