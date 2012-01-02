@@ -12,14 +12,14 @@ Algorithms planned in the first development stage:
 
     * Global Distance Metric Learning by Convex Programming (GDMLCP)
     * Probablistic Global Distance Metric Learning (PGDM)
+    * Relevant Component Analysis (RCA)
+    * Discriminative Component Analysis (DCA)
 
   * Supervised Local Distance Metric Learning:
 
     * Neighbourhood Components Analysis (NCA)
-    * Relevant Component Analysis (RCA)
     * Large Margin Nearest Neighbor Classifier (LMNN)
     * Local Fisher Discriminant Analysis (LFDA)
-    * Discriminative Component Analysis (DCA)
     * Information-Theoretic Metric Learning (ITML)
   
 The algorithms and routines would be adjusted during the dev progress.
