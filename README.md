@@ -24,7 +24,13 @@ Algorithms planned in the first development stage:
   
 The algorithms and routines would be adjusted during the dev progress.
 
+## Links
+
+Track Devel: https://github.com/road2stat/sdml
+Report Bugs: https://github.com/road2stat/sdml/issues
+
 ## Contact
 
-Track our development or report bugs at https://github.com/road2stat/sdml.
+Gao Tao <joegaotao@gmail.com>
+Xiao Nan <road2stat@gmail.com>
 
