@@ -1,0 +1,14 @@
+Package: sdml
+Version: 0.1-0
+Date: 2012-01-03
+Title: Supervised Distance Metric Learning with R
+Description: sdml aims to implement the state-of-the-art algorithms
+    for supervised distance metric learning. These algorithms are 
+    commonly used in clustering, classification, and information
+    retrieval problems.
+Author: Xiao Nan <road2stat@gmail.com>, Gao Tao <joegaotao@gmail.com>
+Maintainer: Xiao Nan <road2stat@gmail.com>
+License: BSD
+URL: https://github.com/road2stat/sdml
+BugReports: https://github.com/road2stat/sdml
+
