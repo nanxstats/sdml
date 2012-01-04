@@ -20,6 +20,7 @@ Algorithms planned in the first development stage:
     * Neighbourhood Components Analysis (NCA)
     * Large Margin Nearest Neighbor Classifier (LMNN)
     * Local Fisher Discriminant Analysis (LFDA)
+    * Kernel Local Fisher Discriminant Analysis (KLFDA)
     * Information-Theoretic Metric Learning (ITML)
   
 The algorithms and routines would be adjusted during the dev progress.
@@ -31,6 +32,8 @@ Track Devel: https://github.com/road2stat/sdml
 Report Bugs: https://github.com/road2stat/sdml/issues
 
 ## Contact
+
+Contact the authors of this package:
 
 Gao Tao <joegaotao@gmail.com>
 
