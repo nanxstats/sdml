@@ -27,8 +27,8 @@
 #'          computed by (x2 - x1)' * B * (x2 - x1)}
 #' \item{A}{The RCA suggested transformation of the data.
 #'          The data should be transformed by A * data}
-#' \item{newData}{The data after the RCA transformation (A).
-#'                newData = A * data}
+#' \item{newX}{The data after the RCA transformation (A).
+#'             newData = A * data}
 #' The three returned argument are just different forms of the same output.
 #' If one is interested in a Mahalanobis metric over the original data space, 
 #' the first argument is all she/he needs. If a transformation into another
@@ -56,10 +56,43 @@
 #' @examples
 #' rca(letters)
 #' rca(c("i", "like", "programming", NA))
+
 rca <- function(x, chunks) {
 
+chunkNum = length(chunks)
+chunkDf = vector("list", chunkNum)
+p = length(unlist(chunks))
 
+for (i in 1:chunkNum) {
+  chunkDf[[i]] = as.matrix(x[chunks[[i]], ])
+}
 
+chunkMean = lapply(chunkDf, colMeans)
+
+for (i in 1:chunkNum) {
+  chunkDf[[i]] = chunkDf[[i]] - chunkMean[[i]]
+}
+
+cData = do.call(rbind, chunkDf)  # calc inner covariance matrix and normalize
+innerCov = cov(cData) * ((nrow(cData) - 1) / nrow(cData))
+
+for (i in 1:chunkNum) {
+  chunkDf[[i]] = t(chunkDf[[i]]) %*% chunkDf[[i]]
+}
+
+hatC = Reduce("+", chunkDf)/p  # Reduce() calc sum of matrices in a list
+
+B = solve(hatC)  # raw mahalanobis metric
+
+"%^%" <- function(x, n) {  # define negative one half matrix power operator
+  with(eigen(x), vectors %*% (values^n * t(vectors)))
+}
+A = diag(ncol(x))
+A = A %*% (innerCov %^% (-0.5))  # whitening transformation matrix
+
+newX = as.matrix(x) %*% A  # original data transformed
+
+return(list(B, A, newX))
 }
 
 set.seed(1234)
@@ -73,10 +106,10 @@ x3 = mvrnorm(k, mu = c(1, -1), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
 x = as.data.frame(rbind(x1, x2, x3))
 x$V3 = gl(n, k)
 
-plot(x$V1, x$V2, bg = c("#E41A1C", "#377EB8", "#4DAF4A")[x$V3], 
-     pch = c(rep(22, k), rep(21, k), rep(25, k)))
+# plot(x$V1, x$V2, bg = c("#E41A1C", "#377EB8", "#4DAF4A")[x$V3], 
+#      pch = c(rep(22, k), rep(21, k), rep(25, k)))
 
-plot(x$V1, x$V2)
+# plot(x$V1, x$V2)
 
 chunk1 = sample(1:100, 5)
 chunk2 = sample(setdiff(1:100, chunk1), 5)
@@ -84,8 +117,10 @@ chunk3 = sample(101:200, 5)
 chunk4 = sample(setdiff(101:200, chunk3), 5)
 chunk5 = sample(201:300, 5)
 
-chunks = x[c(chunk1, chunk2, chunk3, chunk4, chunk5), ]
+# chks = x[c(chunk1, chunk2, chunk3, chunk4, chunk5), ]
 
-plot(chunks$V1, chunks$V2, col = rep(c("#E41A1C", "#377EB8", "#4DAF4A", 
-     "#984EA3", "#FF7F00"), each = 5), pch = rep(0:4, each = 5))
+# plot(chunks$V1, chunks$V2, col = rep(c("#E41A1C", "#377EB8", "#4DAF4A", 
+#      "#984EA3", "#FF7F00"), each = 5), pch = rep(0:4, each = 5))
 
+chunks = list(chunk1, chunk2, chunk3, chunk4, chunk5)
+x$V3 = NULL
