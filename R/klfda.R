@@ -4,6 +4,8 @@
 #' Performs kernel local fisher discriminant analysis on the given data.
 #' 
 #' Put KLFDA function details here.
+#' The eigenvectors calculation of sparse matrices
+#' invokes the ARPACK library interface provided by igraph package.
 #' 
 #' @param k n x n kernel matrix
 #'          n --- the number of samples
@@ -20,7 +22,7 @@
 #' \item{T}{d x r transformation matrix (Z = T' * X)}
 #' \item{Z}{r x n matrix of dimensionality reduced samples}
 #' 
-#' @keywords klfda local fisher discrminant transformation mahalanobis metric
+#' @keywords klfda local fisher discriminant transformation mahalanobis metric
 #'
 #' @note put some note here
 #' 
@@ -37,11 +39,7 @@
 #' klfda(letters)
 #' klfda(c("i", "like", "programming", NA))
 
-klfda <- function (k, y, r, metric, knn, reg) {
-
-
-
-}
+require(igraph)  # delete this when test is done
 
 kmatrixGauss = function(x, sigma) {
 
@@ -49,3 +47,8 @@ kmatrixGauss = function(x, sigma) {
 
 }
 
+klfda <- function (k, y, r, metric, knn, reg) {
+
+
+
+}

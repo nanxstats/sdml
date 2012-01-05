@@ -6,6 +6,7 @@ Description: sdml aims to implement the state-of-the-art algorithms
     for supervised distance metric learning. These algorithms are 
     commonly used in clustering, classification, and information
     retrieval problems.
+Imports: igraph
 Author: Gao Tao <joegaotao@gmail.com>, Xiao Nan <road2stat@gmail.com>
 Maintainer: Xiao Nan <road2stat@gmail.com>
 License: BSD
