@@ -9,21 +9,22 @@ Distance metric is widely used in the machine learning literature. We used to ch
 Algorithms planned in the first development stage:
 
   * Supervised Global Distance Metric Learning:
-
-    * Global Distance Metric Learning by Convex Programming (GDMLCP)
-    * Probablistic Global Distance Metric Learning (PGDM)
+  
     * Relevant Component Analysis (RCA)
     * Discriminative Component Analysis (DCA)
+    * Global Distance Metric Learning by Convex Programming (GDMLCP)
+    * Probablistic Global Distance Metric Learning (PGDM)
 
   * Supervised Local Distance Metric Learning:
 
-    * Neighbourhood Components Analysis (NCA)
-    * Large Margin Nearest Neighbor Classifier (LMNN)
     * Local Fisher Discriminant Analysis (LFDA)
     * Kernel Local Fisher Discriminant Analysis (KLFDA)
+    * Localized Distance Metric Learning (LDM)
     * Information-Theoretic Metric Learning (ITML)
-  
-The algorithms and routines would be adjusted during the dev progress.
+    * Neighbourhood Components Analysis (NCA)
+    * Large Margin Nearest Neighbor Classifier (LMNN)
+
+The algorithms and routines might be adjusted during developing.
 
 ## Links
 
