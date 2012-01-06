@@ -7,8 +7,8 @@
 #' The eigenvectors calculation of sparse matrices
 #' invokes the ARPACK library interface provided by igraph package.
 #' 
-#' @param x n x d matrix of original samples
-#'          n --- the number of samples 
+#' @param x n x d matrix of original samples.
+#'          n is the number of samples.
 #' @param y length n vector of class labels
 #' @param r dimensionality of reduced space (default: d)
 #' @param metric type of metric in the embedding space (default: 'weighted')
@@ -27,14 +27,23 @@
 #' 
 #' @author Xiao Nan \email{road2stat@gmail.com}
 #' 
-#' @seealso \code{\link{klfda}} the non-linear extension using kernel trick
+#' @seealso See \code{\link{klfda}} for the kernelized variant of
+#'          LFDA (Kernel LFDA).
 #' 
 #' @importFrom igraph arpack
 #'
-#' @export
+#' @export lfda
 #' 
-#' @references Venables, W. N. and Ripley, B. D. (2002) \emph{Modern
-#' Applied Statistics with S}. Fourth edition. Springer.
+#' @references Sugiyama, M.
+#' Dimensionality reduction of multimodal labeled data by
+#' local Fisher discriminant analysis.
+#' \emph{Journal of Machine Learning Research}, vol.8 (May), pp.1027-1061, 2007.
+#' 
+#' Sugiyama, M.
+#' Local Fisher discriminant analysis for supervised dimensionality reduction.
+#' In W. W. Cohen and A. Moore (Eds.), \emph{Proceedings of 23rd International
+#' Conference on Machine Learning (ICML2006)}, pp.905-912, Pittsburgh,
+#' Pennsylvania, USA, Jun. 25-29, 2006.
 #' 
 #' @examples
 #' lfda(letters)

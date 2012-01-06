@@ -50,8 +50,10 @@
 #' 
 #' @export
 #' 
-#' @references Venables, W. N. and Ripley, B. D. (2002) \emph{Modern
-#' Applied Statistics with S}. Fourth edition. Springer.
+#' @references Aharon Bar-Hillel, Tomer Hertz, Noam Shental, and Daphna Weinshall.
+#'             Learning Distance Functions using Equivalence Relations.
+#'             \emph{Proceedings of 20th International Conference on
+#'             Machine Learning (ICML2003)}, Washington DC, August 2003.
 #' 
 #' @examples
 #' rca(letters)
@@ -124,3 +126,4 @@ chunk5 = sample(201:300, 5)
 
 chunks = list(chunk1, chunk2, chunk3, chunk4, chunk5)
 x$V3 = NULL
+
