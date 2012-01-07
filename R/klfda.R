@@ -49,73 +49,71 @@
 #' klfda(letters)
 #' klfda(c("i", "like", "programming", NA))
 
-require(igraph)  # delete this when test is done
-
 repmat <- function(A, N, M) {
-  kronecker(matrix(1, N, M), A)
+	kronecker(matrix(1, N, M), A)
 }
 
-klfda <- function (k, y, r, metric = c('weighted', 
-                   'orthonormalized', 'plain'), 
+klfda <- function (k, y, r, metric = c('weighted', 'orthonormalized', 'plain'), 
                    knn = 7, reg = 0.001) {
 
-metric = match.arg(metric)
+	metric = match.arg(metric)
 
-y = t(as.matrix(y))
+	y = t(as.matrix(y))
 
-n = nrow(k)
+	n = nrow(k)
 
-if(is.null(r)) r = n
+	if(is.null(r)) r = n
 
-tSb = mat.or.vec(n, n)
-tSw = mat.or.vec(n, n)
+	tSb = mat.or.vec(n, n)
+	tSw = mat.or.vec(n, n)
 
-for (i in unique(as.vector(t(y)))) {
+	for (i in unique(as.vector(t(y)))) {
 
-Kcc = k[y == i, y == i]
-Kc = k[, y == i]
-nc = nrow(Kcc)
+	Kcc = k[y == i, y == i]
+	Kc = k[, y == i]
+	nc = nrow(Kcc)
 
-# Define classwise affinity matrix
-Kccdiag = diag(as.vector(Kcc))
-distance2 = repmat(Kccdiag, 1, nc) + repmat(t(Kccdiag), nc, 1) - 2 * Kcc
+	# Define classwise affinity matrix
+	Kccdiag = diag(as.vector(Kcc))
+	distance2 = repmat(Kccdiag, 1, nc) + repmat(t(Kccdiag), nc, 1) - 2 * Kcc
 
-sorted = apply(distance2, 2, sort)
-index = apply(distance2, 2, order)
+	sorted = apply(distance2, 2, sort)
+	index = apply(distance2, 2, order)
 
-kNNdist2 = t(as.matrix(sorted[knn + 1, ]))
-sigma = sqrt(kNNdist2)
-localscale = t(sigma) %*% sigma
-flag = (localscale != 0)
-A = mat.or.vec(nc, nc)
-A[flag] = exp(-distance2[flag]/localscale[flag])
+	kNNdist2 = t(as.matrix(sorted[knn + 1, ]))
+	sigma = sqrt(kNNdist2)
+	localscale = t(sigma) %*% sigma
+	flag = (localscale != 0)
+	A = mat.or.vec(nc, nc)
+	A[flag] = exp(-distance2[flag]/localscale[flag])
 
-Kc1 = as.matrix(rowSums(Kc))
-Z = Kc %*% (repmat(as.matrix(colSums(A)), 1, n) * t(Kc)) - Kc %*% A %*% t(Kc)
-tSb = tSb + (Z/n) + Kc %*% t(Kc) * (1 - nc/n) + Kc1 %*% (t(Kc1)/n)
-tSw = tSw + Z/nc
-}
+	Kc1 = as.matrix(rowSums(Kc))
+	Z = Kc %*% (repmat(as.matrix(colSums(A)), 1, n) * t(Kc)) - Kc %*% A %*% t(Kc)
+	tSb = tSb + (Z/n) + Kc %*% t(Kc) * (1 - nc/n) + Kc1 %*% (t(Kc1)/n)
+	tSw = tSw + Z/nc
+	}
 
-K1 = as.matrix(rowSums(k))
-tSb = tSb - K1 %*% t(K1)/n - tSw
+	K1 = as.matrix(rowSums(k))
+	tSb = tSb - K1 %*% t(K1)/n - tSw
 
-tSb = (tSb + t(tSb))/2
-tSw = (tSw + t(tSw))/2
+	tSb = (tSb + t(tSb))/2
+	tSw = (tSw + t(tSw))/2
 
-eigTmp = igraph::arpack(tSb, tSw + reg * diag(1, nrow(tSw), ncol(tSw)), r, 'LA')  # To be edited here!!
-eigVec = eigTmp$vectors
-eigVal = as.matrix(eigTmp$values)
+	eigTmp = igraph::arpack(tSb, 
+	         tSw + reg * diag(1, nrow(tSw), ncol(tSw)), r, 'LA')  # To be edited here!
+	eigVec = eigTmp$vectors
+	eigVal = as.matrix(eigTmp$values)
 
-T0 = eigVec
+	T0 = eigVec
 
-T = switch(metric,
-           weighted = T0 * repmat(t(sqrt(eigVal)), n, 1),
-           orthonormalized = qr.Q(qr(T0)), # QR result little different Here!
-           plain = T0
-)
+	T = switch(metric,
+			   weighted = T0 * repmat(t(sqrt(eigVal)), n, 1),
+			   orthonormalized = qr.Q(qr(T0)),  # QR result little different Here!
+			   plain = T0
+			   )
 
-Z = t(t(T) %*% k)
+	Z = t(t(T) %*% k)
 
-return(list(T, Z))
+	return(list(T, Z))
 }
 

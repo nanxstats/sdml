@@ -40,16 +40,16 @@
 #' klfda(c("i", "like", "programming", NA))
 
 repmat <- function(A, N, M) {
-  kronecker(matrix(1, N, M), A)
+	kronecker(matrix(1, N, M), A)
 }
 
 kmatrixGauss = function(x, sigma = 1) {
-x = t(as.matrix(x))
-d = nrow(x)
-n = ncol(x)
-X2 = t(as.matrix(colSums(x^2)))
-distance2 = repmat(X2, n, 1) + repmat(t(X2), 1, n) - 2 * t(X) %*% X
-K = exp(-distance2/(2 * sigma^2)) # To be tested
-return(K)
+	x = t(as.matrix(x))
+	d = nrow(x)
+	n = ncol(x)
+	X2 = t(as.matrix(colSums(x^2)))
+	distance2 = repmat(X2, n, 1) + repmat(t(X2), 1, n) - 2 * t(X) %*% X
+	K = exp(-distance2/(2 * sigma^2)) # To be tested
+	return(K)
 }
 

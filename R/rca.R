@@ -56,74 +56,71 @@
 #'             Machine Learning (ICML2003)}, Washington DC, August 2003.
 #' 
 #' @examples
-#' rca(letters)
-#' rca(c("i", "like", "programming", NA))
+#' set.seed(1234)
+#' require(MASS)  # generate synthetic Gaussian data
+#' k = 100        # sample size of each class
+#' n = 3          # specify how many class
+#' N = k * n      # total sample number
+#' x1 = mvrnorm(k, mu = c(-1, 1), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
+#' x2 = mvrnorm(k, mu = c(0, 0), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
+#' x3 = mvrnorm(k, mu = c(1, -1), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
+#' x = as.data.frame(rbind(x1, x2, x3))
+#' x$V3 = gl(n, k)
+#' 
+#' # plot(x$V1, x$V2, bg = c("#E41A1C", "#377EB8", "#4DAF4A")[x$V3], 
+#' #      pch = c(rep(22, k), rep(21, k), rep(25, k)))
+#' 
+#' # plot(x$V1, x$V2)
+#' 
+#' chunk1 = sample(1:100, 5)
+#' chunk2 = sample(setdiff(1:100, chunk1), 5)
+#' chunk3 = sample(101:200, 5)
+#' chunk4 = sample(setdiff(101:200, chunk3), 5)
+#' chunk5 = sample(201:300, 5)
+#' 
+#' # chks = x[c(chunk1, chunk2, chunk3, chunk4, chunk5), ]
+#' 
+#' # plot(chunks$V1, chunks$V2, col = rep(c("#E41A1C", "#377EB8", "#4DAF4A", 
+#' #      "#984EA3", "#FF7F00"), each = 5), pch = rep(0:4, each = 5))
+#' 
+#' chunks = list(chunk1, chunk2, chunk3, chunk4, chunk5)
+#' x$V3 = NULL
 
 rca <- function(x, chunks) {
 
-chunkNum = length(chunks)
-chunkDf = vector("list", chunkNum)
-p = length(unlist(chunks))
+	chunkNum = length(chunks)
+	chunkDf = vector("list", chunkNum)
+	p = length(unlist(chunks))
 
-for (i in 1:chunkNum) {
-  chunkDf[[i]] = as.matrix(x[chunks[[i]], ])
+	for (i in 1:chunkNum) {
+	  chunkDf[[i]] = as.matrix(x[chunks[[i]], ])
+	}
+
+	chunkMean = lapply(chunkDf, colMeans)
+
+	for (i in 1:chunkNum) {
+	  chunkDf[[i]] = chunkDf[[i]] - chunkMean[[i]]
+	}
+
+	cData = do.call(rbind, chunkDf)  # calc inner covariance matrix and normalize
+	innerCov = cov(cData) * ((nrow(cData) - 1) / nrow(cData))
+
+	for (i in 1:chunkNum) {
+	  chunkDf[[i]] = t(chunkDf[[i]]) %*% chunkDf[[i]]
+	}
+
+	hatC = Reduce("+", chunkDf)/p    # Reduce() calc sum of matrices in a list
+
+	B = solve(hatC)                  # raw mahalanobis metric
+
+	"%^%" <- function(x, n) {        # define negative one half matrix power operator
+	  with(eigen(x), vectors %*% (values^n * t(vectors)))
+	}
+	A = diag(ncol(x))
+	A = A %*% (innerCov %^% (-0.5))  # whitening transformation matrix
+
+	newX = as.matrix(x) %*% A        # original data transformed
+
+	return(list(B, A, newX))
 }
-
-chunkMean = lapply(chunkDf, colMeans)
-
-for (i in 1:chunkNum) {
-  chunkDf[[i]] = chunkDf[[i]] - chunkMean[[i]]
-}
-
-cData = do.call(rbind, chunkDf)  # calc inner covariance matrix and normalize
-innerCov = cov(cData) * ((nrow(cData) - 1) / nrow(cData))
-
-for (i in 1:chunkNum) {
-  chunkDf[[i]] = t(chunkDf[[i]]) %*% chunkDf[[i]]
-}
-
-hatC = Reduce("+", chunkDf)/p  # Reduce() calc sum of matrices in a list
-
-B = solve(hatC)  # raw mahalanobis metric
-
-"%^%" <- function(x, n) {  # define negative one half matrix power operator
-  with(eigen(x), vectors %*% (values^n * t(vectors)))
-}
-A = diag(ncol(x))
-A = A %*% (innerCov %^% (-0.5))  # whitening transformation matrix
-
-newX = as.matrix(x) %*% A  # original data transformed
-
-return(list(B, A, newX))
-}
-
-set.seed(1234)
-require(MASS)  # generate synthetic Gaussian data
-k = 100        # sample size of each class
-n = 3          # specify how many class
-N = k * n      # total sample number
-x1 = mvrnorm(k, mu = c(-1, 1), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
-x2 = mvrnorm(k, mu = c(0, 0), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
-x3 = mvrnorm(k, mu = c(1, -1), matrix(c(1, 0.8, 0.8, 1), ncol = 2))
-x = as.data.frame(rbind(x1, x2, x3))
-x$V3 = gl(n, k)
-
-# plot(x$V1, x$V2, bg = c("#E41A1C", "#377EB8", "#4DAF4A")[x$V3], 
-#      pch = c(rep(22, k), rep(21, k), rep(25, k)))
-
-# plot(x$V1, x$V2)
-
-chunk1 = sample(1:100, 5)
-chunk2 = sample(setdiff(1:100, chunk1), 5)
-chunk3 = sample(101:200, 5)
-chunk4 = sample(setdiff(101:200, chunk3), 5)
-chunk5 = sample(201:300, 5)
-
-# chks = x[c(chunk1, chunk2, chunk3, chunk4, chunk5), ]
-
-# plot(chunks$V1, chunks$V2, col = rep(c("#E41A1C", "#377EB8", "#4DAF4A", 
-#      "#984EA3", "#FF7F00"), each = 5), pch = rep(0:4, each = 5))
-
-chunks = list(chunk1, chunk2, chunk3, chunk4, chunk5)
-x$V3 = NULL
 
