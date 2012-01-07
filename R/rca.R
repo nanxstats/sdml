@@ -40,7 +40,7 @@
 #' 
 #' @keywords rca transformation mahalanobis metric
 #'
-#' @note Note that any different sets of instances (chunklets), 
+#' @note Note that any different sets of instances (chunklets),
 #        e.g. {1, 3, 7} and {4, 6}, might belong to the 
 #'       same class and might belong to different classes.
 #' 
@@ -93,20 +93,20 @@ rca <- function(x, chunks) {
 	p = length(unlist(chunks))
 
 	for (i in 1:chunkNum) {
-	  chunkDf[[i]] = as.matrix(x[chunks[[i]], ])
+		chunkDf[[i]] = as.matrix(x[chunks[[i]], ])
 	}
 
 	chunkMean = lapply(chunkDf, colMeans)
 
 	for (i in 1:chunkNum) {
-	  chunkDf[[i]] = chunkDf[[i]] - chunkMean[[i]]
+		chunkDf[[i]] = chunkDf[[i]] - chunkMean[[i]]
 	}
 
 	cData = do.call(rbind, chunkDf)  # calc inner covariance matrix and normalize
 	innerCov = cov(cData) * ((nrow(cData) - 1) / nrow(cData))
 
 	for (i in 1:chunkNum) {
-	  chunkDf[[i]] = t(chunkDf[[i]]) %*% chunkDf[[i]]
+		chunkDf[[i]] = t(chunkDf[[i]]) %*% chunkDf[[i]]
 	}
 
 	hatC = Reduce("+", chunkDf)/p    # Reduce() calc sum of matrices in a list
@@ -114,8 +114,9 @@ rca <- function(x, chunks) {
 	B = solve(hatC)                  # raw mahalanobis metric
 
 	"%^%" <- function(x, n) {        # define negative one half matrix power operator
-	  with(eigen(x), vectors %*% (values^n * t(vectors)))
+			with(eigen(x), vectors %*% (values^n * t(vectors)))
 	}
+	
 	A = diag(ncol(x))
 	A = A %*% (innerCov %^% (-0.5))  # whitening transformation matrix
 

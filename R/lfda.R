@@ -54,17 +54,13 @@ repmat <- function(A, N, M) {
 	kronecker(matrix(1, N, M), A)
 }
 
-lfda <- function(x, y, r, metric = c('weighted', 
-                 'orthonormalized', 'plain'), knn = 7) {
+lfda <- function(x, y, r, metric = c('weighted', 'orthonormalized', 'plain'), knn = 7) {
 
 	metric = match.arg(metric)
-
 	x = t(as.matrix(x))
 	y = t(as.matrix(y))
-
 	d = nrow(x)
 	n = ncol(x)
-
 	if(is.null(r)) r = d
 
 	tSb = mat.or.vec(d, d)
@@ -72,27 +68,27 @@ lfda <- function(x, y, r, metric = c('weighted',
 
 	for (i in unique(as.vector(t(y)))) {
 
-	Xc = x[, y == i]
-	nc = ncol(Xc)
+		Xc = x[, y == i]
+		nc = ncol(Xc)
 
-	# Define classwise affinity matrix
-	Xc2 = t(as.matrix(colSums(Xc^2)))
-	distance2 = repmat(Xc2, nc, 1) + repmat(t(Xc2), 1, nc) - 2 * t(Xc) %*% Xc
+		# Define classwise affinity matrix
+		Xc2 = t(as.matrix(colSums(Xc^2)))
+		distance2 = repmat(Xc2, nc, 1) + repmat(t(Xc2), 1, nc) - 2 * t(Xc) %*% Xc
 
-	sorted = apply(distance2, 2, sort)
-	index = apply(distance2, 2, order)
+		sorted = apply(distance2, 2, sort)
+		index = apply(distance2, 2, order)
 
-	kNNdist2 = t(as.matrix(sorted[knn + 1, ]))
-	sigma = sqrt(kNNdist2)
-	localscale = t(sigma) %*% sigma
-	flag = (localscale != 0)
-	A = mat.or.vec(nc, nc)
-	A[flag] = exp(-distance2[flag]/localscale[flag])
+		kNNdist2 = t(as.matrix(sorted[knn + 1, ]))
+		sigma = sqrt(kNNdist2)
+		localscale = t(sigma) %*% sigma
+		flag = (localscale != 0)
+		A = mat.or.vec(nc, nc)
+		A[flag] = exp(-distance2[flag]/localscale[flag])
 
-	Xc1 = as.matrix(rowSums(Xc))
-	G = Xc %*% (repmat(as.matrix(colSums(A)), 1, d) * t(Xc)) - Xc %*% A %*% t(Xc)
-	tSb = tSb + (G/n) + Xc %*% t(Xc) * (1 - nc/n) + Xc1 %*% (t(Xc1)/n)
-	tSw = tSw + G/nc
+		Xc1 = as.matrix(rowSums(Xc))
+		G = Xc %*% (repmat(as.matrix(colSums(A)), 1, d) * t(Xc)) - Xc %*% A %*% t(Xc)
+		tSb = tSb + (G/n) + Xc %*% t(Xc) * (1 - nc/n) + Xc1 %*% (t(Xc1)/n)
+		tSw = tSw + G/nc
 	}
 
 	X1 = as.matrix(rowSums(x))
@@ -102,24 +98,24 @@ lfda <- function(x, y, r, metric = c('weighted',
 	tSw = (tSw + t(tSw))/2
 
 	if (r == d) {
-	eigTmp = eigen(solve(tSw) %*% tSb)  # Note: Different from LFDA original implemention
-                                        # Eigenvectors here are normalized
-	eigVec = eigTmp$vectors
-	eigVal = as.matrix(eigTmp$values)
+		eigTmp = eigen(solve(tSw) %*% tSb)  # Note: Different from LFDA original implemention
+                                            # Eigenvectors here are normalized
+		eigVec = eigTmp$vectors
+		eigVal = as.matrix(eigTmp$values)
 	}
 	else {
-	eigTmp = igraph::arpack(tSb, tSw, r, 'LA')  # To be edited here!
-	eigVec = eigTmp$vectors
-	eigVal = as.matrix(eigTmp$values)
+		eigTmp = igraph::arpack(tSb, tSw, r, 'LA')  # To be edited here!
+		eigVec = eigTmp$vectors
+		eigVal = as.matrix(eigTmp$values)
 	}
 
 	T0 = eigVec
 
 	T = switch(metric,
-			   weighted = T0 * repmat(t(sqrt(eigVal)), d, 1),
-			   orthonormalized = qr.Q(qr(T0)),  # QR result little different Here!
-			   plain = T0
-			   )
+		weighted = T0 * repmat(t(sqrt(eigVal)), d, 1),
+		orthonormalized = qr.Q(qr(T0)),  # QR result little different Here!
+		plain = T0
+	)
 
 	Z = t(t(T) %*% x)
 
