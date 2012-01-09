@@ -12,6 +12,7 @@ Algorithms planned in the first development stage:
   
     * Relevant Component Analysis (RCA)
     * Discriminative Component Analysis (DCA)
+    * Kernel Discriminative Component Analysis (KDCA)
     * Global Distance Metric Learning by Convex Programming (GDMLCP)
     * Probablistic Global Distance Metric Learning (PGDM)
 
