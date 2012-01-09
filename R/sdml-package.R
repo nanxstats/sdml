@@ -18,15 +18,22 @@
 #' @docType package
 #' @exportPattern "^[^\\.]"
 #' @author Xiao Nan <\url{http://www.road2stat.com}>
-#'           Gao Tao <\url{http://www.gaotao.name}>
-#' @note Bug reports and feature requests could be sent to
+#'         Gao Tao <\url{http://www.gaotao.name}>
+#' 
+#' @note
+#' Bug reports and feature requests could be sent to
 #' \url{https://github.com/road2stat/sdml/issues}.
-#' @references The associated website for this package:
+#' 
+#' @references
+#' The associated website for this package:
 #' \url{https://github.com/road2stat/sdml/}
 #'
-#' @seealso Add \code{\link{rca}}, \code{\link{lfda}}, etc.
+#' @seealso Add \code{\link{rca}}, \code{\link{lfda}}, 
+#'              \code{\link{klfda}}, \code{\link{dca}},
+#'              \code{\link{kdca}}, etc.
 #' 
-#' @keywords package supervised distance metric learning 
-#' @example add package examples in inst/examples/sdml-package-ex.R
+#' @keywords package supervised distance metric learning sdml
+#' dimension reduction feature extraction
+#' @example inst/examples/sdml-package-ex.R
 NULL
 

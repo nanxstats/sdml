@@ -1,59 +1,3 @@
-#' Gaussian Kernel Computation for
-#' Kernel Local Fisher Discriminant Analysis
-#'
-#' Gaussian kernel computation for klfda.
-#' 
-#' Put kmatrixGauss function details here.
-#' 
-#' @param x n x d matrix of original samples.
-#'          n is the number of samples.
-#' @param sigma dimensionality of reduced space. (default: 0.001)
-#' 
-#' @return K n x n kernel matrix.
-#'           n is the number of samples.
-#' 
-#' @keywords klfda kernel local fisher discriminant
-#'           transformation mahalanobis metric
-#'
-#' @note Put some note here.
-#' 
-#' @author Xiao Nan \email{road2stat@gmail.com}
-#' 
-#' @seealso See \code{klfda} for the computation of
-#'          kernel local fisher discriminant analysis
-#' 
-#' @export kmatrixGauss
-#' 
-#' @references Sugiyama, M.
-#' Dimensionality reduction of multimodal labeled data by
-#' local Fisher discriminant analysis.
-#' \emph{Journal of Machine Learning Research}, vol.8 (May), pp.1027-1061, 2007.
-#' 
-#' Sugiyama, M.
-#' Local Fisher discriminant analysis for supervised dimensionality reduction.
-#' In W. W. Cohen and A. Moore (Eds.), \emph{Proceedings of 23rd International
-#' Conference on Machine Learning (ICML2006)}, pp.905-912, Pittsburgh,
-#' Pennsylvania, USA, Jun. 25-29, 2006.
-#' 
-#' @examples
-#' klfda(letters)
-#' klfda(c("i", "like", "programming", NA))
-
-repmat <- function(A, N, M) {
-	kronecker(matrix(1, N, M), A)
-}
-
-kmatrixGauss <- function(x, sigma = 1) {
-	x = t(as.matrix(x))
-	d = nrow(x)
-	n = ncol(x)
-	X2 = t(as.matrix(colSums(x^2)))
-	distance2 = repmat(X2, n, 1) + repmat(t(X2), 1, n) - 2 * t(X) %*% X
-	K = exp(-distance2/(2 * sigma^2)) # To be tested
-	return(K)
-}
-
-
 #' Kernel Local Fisher Discriminant Analysis for
 #' Supervised Dimensionality Reduction
 #'
@@ -63,8 +7,8 @@ kmatrixGauss <- function(x, sigma = 1) {
 #' The eigenvectors calculation of sparse matrices
 #' invokes the ARPACK library interface provided by igraph package.
 #' 
-#' @param k n x n kernel matrix. Result of the \code(\link{kmatrixGauss}) function.
-#'          n is the number of samples.
+#' @param k n x n kernel matrix. Result of the \code{\link{kmatrixGauss}} function.
+#'          n is the number of samples
 #' @param y n dimensional vector of class labels
 #' @param r dimensionality of reduced space (default: d)
 #' @param metric type of metric in the embedding space (default: 'weighted')
@@ -75,14 +19,17 @@ kmatrixGauss <- function(x, sigma = 1) {
 #' @param reg regularization parameter (default: 0.001)
 #' 
 #' @return list of the LFDA results:
-#' \item{T}{d x r transformation matrix (Z = T' * X)}
+#' \item{T}{d x r transformation matrix (Z = t(T) * X)}
 #' \item{Z}{r x n matrix of dimensionality reduced samples}
 #' 
 #' @keywords klfda local fisher discriminant transformation mahalanobis metric
 #'
-#' @note Put some note here.
+#' @aliases klfda
 #' 
-#' @author Xiao Nan \email{road2stat@gmail.com}
+#' @note The result is NOT exactly the same with theoriginal MATLAB implemention,
+#'       for the eigenvectors are normalized here.
+#' 
+#' @author Xiao Nan <\url{http://www.road2stat.com}>
 #' 
 #' @seealso See \code{\link{lfda}} for the linear version.
 #' 
@@ -90,24 +37,19 @@ kmatrixGauss <- function(x, sigma = 1) {
 #'
 #' @export klfda
 #' 
-#' @references Sugiyama, M.
+#' @references
+#' Sugiyama, M (2007).
 #' Dimensionality reduction of multimodal labeled data by
 #' local Fisher discriminant analysis.
-#' \emph{Journal of Machine Learning Research}, vol.8 (May), pp.1027-1061, 2007.
+#' \emph{Journal of Machine Learning Research}, vol.\bold{8}, 1027--1061.
 #' 
-#' Sugiyama, M.
+#' Sugiyama, M (2006).
 #' Local Fisher discriminant analysis for supervised dimensionality reduction.
 #' In W. W. Cohen and A. Moore (Eds.), \emph{Proceedings of 23rd International
-#' Conference on Machine Learning (ICML2006)}, pp.905-912, Pittsburgh,
-#' Pennsylvania, USA, Jun. 25-29, 2006.
+#' Conference on Machine Learning (ICML2006)}, 905--912.
 #'
 #' @examples
-#' klfda(letters)
-#' klfda(c("i", "like", "programming", NA))
-
-repmat <- function(A, N, M) {
-	kronecker(matrix(1, N, M), A)
-}
+#' NULL
 
 klfda <- function (k, y, r, metric = c('weighted', 'orthonormalized', 'plain'), 
                    knn = 7, reg = 0.001) {
@@ -166,6 +108,6 @@ klfda <- function (k, y, r, metric = c('weighted', 'orthonormalized', 'plain'),
 
 	Z = t(t(T) %*% k)
 
-	return(list(T, Z))
+	return(list("T" = T, "Z" = Z))
 }
 

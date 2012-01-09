@@ -30,31 +30,36 @@
 #'          The data should be transformed by A * data}
 #' \item{newX}{The data after the RCA transformation (A).
 #'             newData = A * data}
+#' 
 #' The three returned argument are just different forms of the same output.
 #' If one is interested in a Mahalanobis metric over the original data space, 
 #' the first argument is all she/he needs. If a transformation into another
 #' space (where one can use the Euclidean metric) is preferred, the second
 #' returned argument is sufficient. Using A and B is equivalent in the 
 #' following sense:
+#' 
 #' if y1 = A * x1, y2 = A * y2  then
 #' (x2 - x1)' * B * (x2 - x1) = (y2 - y1)' * (y2 - y1)
 #' 
 #' @keywords rca transformation mahalanobis metric
 #'
+#' @aliases rca
+#' 
 #' @note Note that any different sets of instances (chunklets),
-#        e.g. {1, 3, 7} and {4, 6}, might belong to the 
+#'       e.g. {1, 3, 7} and {4, 6}, might belong to the 
 #'       same class and might belong to different classes.
 #' 
-#' @author Xiao Nan \email{road2stat@gmail.com}
+#' @author Xiao Nan <\url{http://www.road2stat.com}>
 #' 
 #' @seealso See \code{\link{dca}} for exploiting negative constrains.
 #' 
 #' @export rca
 #' 
-#' @references Aharon Bar-Hillel, Tomer Hertz, Noam Shental, and Daphna Weinshall.
-#'             Learning Distance Functions using Equivalence Relations.
-#'             \emph{Proceedings of 20th International Conference on
-#'             Machine Learning (ICML2003)}, Washington DC, August 2003.
+#' @references
+#' Aharon Bar-Hillel, Tomer Hertz, Noam Shental, and Daphna Weinshall (2003).
+#' Learning Distance Functions using Equivalence Relations.
+#' \emph{Proceedings of 20th International Conference on
+#' Machine Learning (ICML2003)}.
 #' 
 #' @examples
 #' set.seed(1234)
@@ -136,10 +141,6 @@ rca <- function(x, chunks) {
 	hatC = Reduce("+", chunkDf)/p    # Reduce() do the sum of matrices in a list
 
 	B = solve(hatC)                  # raw mahalanobis metric
-
-	"%^%" <- function(x, n) {        # define negative one half matrix power operator
-			with(eigen(x), vectors %*% (values^n * t(vectors)))
-	}
 	
 	A = diag(ncol(x))
 	A = A %*% (innerCov %^% (-0.5))  # whitening transformation matrix

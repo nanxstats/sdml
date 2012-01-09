@@ -23,9 +23,12 @@
 #' 
 #' @keywords lfda local fisher discriminant transformation mahalanobis metric
 #'
-#' @note put some note here
+#' @aliases lfda
 #' 
-#' @author Xiao Nan \email{road2stat@gmail.com}
+#' @note The result is NOT exactly the same with theoriginal MATLAB implemention,
+#'       for the eigenvectors are normalized here.
+#' 
+#' @author Xiao Nan <\url{http://www.road2stat.com}>
 #' 
 #' @seealso See \code{\link{klfda}} for the kernelized variant of
 #'          LFDA (Kernel LFDA).
@@ -34,25 +37,21 @@
 #'
 #' @export lfda
 #' 
-#' @references Sugiyama, M.
+#' @references
+#' Sugiyama, M (2007).
 #' Dimensionality reduction of multimodal labeled data by
 #' local Fisher discriminant analysis.
-#' \emph{Journal of Machine Learning Research}, vol.8 (May), pp.1027-1061, 2007.
+#' \emph{Journal of Machine Learning Research}, vol.\bold{8}, 1027--1061.
 #' 
-#' Sugiyama, M.
+#' Sugiyama, M (2006).
 #' Local Fisher discriminant analysis for supervised dimensionality reduction.
 #' In W. W. Cohen and A. Moore (Eds.), \emph{Proceedings of 23rd International
-#' Conference on Machine Learning (ICML2006)}, pp.905-912, Pittsburgh,
-#' Pennsylvania, USA, Jun. 25-29, 2006.
+#' Conference on Machine Learning (ICML2006)}, 905--912.
 #' 
 #' @examples
 #' require(igraph)  # delete when test is done
 #' x = as.matrix(read.csv('~/X.csv', header = FALSE))  # delete when test done
 #' y = as.matrix(read.csv('~/Y.csv', header = FALSE))  # delete when test done
-
-repmat <- function(A, N, M) {
-	kronecker(matrix(1, N, M), A)
-}
 
 lfda <- function(x, y, r, metric = c('weighted', 'orthonormalized', 'plain'), knn = 7) {
 
@@ -102,8 +101,7 @@ lfda <- function(x, y, r, metric = c('weighted', 'orthonormalized', 'plain'), kn
                                             # Eigenvectors here are normalized
 		eigVec = eigTmp$vectors
 		eigVal = as.matrix(eigTmp$values)
-	}
-	else {
+	} else {
 		eigTmp = igraph::arpack(tSb, tSw, r, 'LA')  # To be edited here!
 		eigVec = eigTmp$vectors
 		eigVal = as.matrix(eigTmp$values)
@@ -119,6 +117,6 @@ lfda <- function(x, y, r, metric = c('weighted', 'orthonormalized', 'plain'), kn
 
 	Z = t(t(T) %*% x)
 
-	return(list(T, Z))
+	return(list("T" = T, "Z" = Z))
 }
 

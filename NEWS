@@ -9,4 +9,5 @@ Version 0.1-0 (2012-01-10)
   * initial version of the Local Fisher Discriminant Analysis (LFDA) algorithm
   * initial version of the Kernel Local Fisher Discriminant Analysis (KLFDA) algorithm
   * initial version of the Discriminative Component Analysis (DCA) algorithm
+  * initial version of the Kernel Discriminative Component Analysis (KDCA) algorithm
 
