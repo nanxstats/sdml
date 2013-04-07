@@ -11,19 +11,19 @@ Algorithms planned in the first development stage:
   * Supervised Global Distance Metric Learning:
   
     * Relevant Component Analysis (RCA)
+    * Kernel Relevant Component Analysis (KRCA)
     * Discriminative Component Analysis (DCA)
     * Kernel Discriminative Component Analysis (KDCA)
     * Global Distance Metric Learning by Convex Programming (GDMLCP)
-    * Probablistic Global Distance Metric Learning (PGDM)
 
   * Supervised Local Distance Metric Learning:
 
     * Local Fisher Discriminant Analysis (LFDA)
     * Kernel Local Fisher Discriminant Analysis (KLFDA)
-    * Localized Distance Metric Learning (LDM)
     * Information-Theoretic Metric Learning (ITML)
-    * Neighbourhood Components Analysis (NCA)
     * Large Margin Nearest Neighbor Classifier (LMNN)
+    * Neighbourhood Components Analysis (NCA)
+    * Localized Distance Metric Learning (LDM)
 
 The algorithms and routines might be adjusted during developing.
 

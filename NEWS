@@ -6,6 +6,7 @@ Version 0.1-0 (2012-01-10)
   NEW FEATURES
   
   * initial version of the Relevant Component Analysis (RCA) algorithm
+  * initial version of the Kernel Relevant Component Analysis (KRCA) algorithm
   * initial version of the Local Fisher Discriminant Analysis (LFDA) algorithm
   * initial version of the Kernel Local Fisher Discriminant Analysis (KLFDA) algorithm
   * initial version of the Discriminative Component Analysis (DCA) algorithm
