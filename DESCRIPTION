@@ -5,14 +5,18 @@ Title: Supervised Distance Metric Learning with R
 Description: The sdml package aims to implement the state-of-the-art
     algorithms for supervised distance metric learning.
     It includes global and local methods such as
-    (Kernel) Relevant Component Analysis,
-    (Kernel) Discriminative Component Analysis,
-    (Kernel) Local Fisher Discriminant Analysis, etc.
+    Relevant Component Analysis (RCA),
+    Discriminative Component Analysis (DCA),
+    Kernel Discriminative Component Analysis (KDCA),
+    Local Fisher Discriminant Analysis (LFDA),
+    Kernel Local Fisher Discriminant Analysis (KLFDA), etc.
     These distance metric learning methods are widely applied in
     feature extraction, dimensionality reduction, clustering,
     classification, information retrieval,
     and computer vision problems.
-Depends:
+Imports:
+    igraph
+Suggests:
     MASS
 Author: Gao Tao <joegaotao@gmail.com>, Xiao Nan <road2stat@gmail.com>
 Maintainer: Xiao Nan <road2stat@gmail.com>
