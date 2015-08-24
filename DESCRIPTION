@@ -14,9 +14,12 @@ Description: The sdml package aims to implement the state-of-the-art
     and computer vision problems.
 Depends:
     MASS
-Author: Gao Tao <joegaotao@gmail.com>, Xiao Nan <road2stat@gmail.com>
-Maintainer: Xiao Nan <road2stat@gmail.com>
-License: BSD
+Imports:
+    rARPACK,
+    lfda
+Author: Gao Tao <joegaotao@gmail.com>, Xiao Nan <road2stat@gmail.com>, Yuan Tang <terrytangyuan@gmail.com>
+Maintainer: Yuan Tang <terrytangyuan@gmail.com>
+License: MIT + file LICENSE
 URL: https://github.com/road2stat/sdml
 BugReports: https://github.com/road2stat/sdml/issues
 Collate:

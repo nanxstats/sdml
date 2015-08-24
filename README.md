@@ -1,3 +1,7 @@
+[![Travis-CI Build Status](https://travis-ci.org/road2stat/sdml.svg?branch=master)](https://travis-ci.org/road2stat/sdml)
+[![Coverage Status](https://coveralls.io/repos/road2stat/sdml/badge.svg?branch=master)](https://coveralls.io/r/road2stat/sdml?branch=master)
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat)](http://badges.mit-license.org)
+
 # sdml
 
 ## Brief Intro
