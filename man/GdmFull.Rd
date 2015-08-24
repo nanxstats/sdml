@@ -70,13 +70,13 @@ par(mfrow = c(2, 1), mar = rep(0, 4) + 0.1)
 scatterplot3d(data, color = color, cex.symbols = 0.6,
 			  xlim = range(data[, 1], newData[, 1]),
 			  ylim = range(data[, 2], newData[, 2]),
-			  zlim = range(data[, 3], newData[, 3])
+			  zlim = range(data[, 3], newData[, 3]),
 			  main = "Original Data")
 # plot GdmFull transformed data
 scatterplot3d(newData, color = color, cex.symbols = 0.6,
 			  xlim = range(data[, 1], newData[, 1]),
 			  ylim = range(data[, 2], newData[, 2]),
-			  zlim = range(data[, 3], newData[, 3])
+			  zlim = range(data[, 3], newData[, 3]),
 			  main = "Transformed Data")
 }
 \author{
