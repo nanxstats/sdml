@@ -18,9 +18,8 @@ Imports:
     rARPACK,
     lfda
 Suggests: testthat
-Author: Gao Tao <joegaotao@gmail.com>, Xiao Nan <road2stat@gmail.com>, Yuan Tang <terrytangyuan@gmail.com>
+Author: Tao Gao <joegaotao@gmail.com>, Nan Xiao <road2stat@gmail.com>, Yuan Tang <terrytangyuan@gmail.com>
 Maintainer: Yuan Tang <terrytangyuan@gmail.com>
 License: MIT + file LICENSE
 URL: https://github.com/road2stat/sdml
 BugReports: https://github.com/road2stat/sdml/issues
-
