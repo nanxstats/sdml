@@ -19,7 +19,7 @@
 #' 
 #' @note Put some note here.
 #' 
-#' @author Xiao Nan <\url{http://www.road2stat.com}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #' 
 #' @seealso See \code{klfda} for the computation of
 #'          kernel local fisher discriminant analysis

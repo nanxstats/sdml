@@ -42,7 +42,7 @@
 #'
 #' @note Put some note here.
 #'
-#' @author Xiao Nan <\url{http://www.road2stat.com}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{kdca}} for the kernelized version of DCA.
 #'

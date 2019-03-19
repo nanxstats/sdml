@@ -2,7 +2,7 @@
 
 # sdml
 
-## Note: (This package has been moved to a [new package](https://github.com/terrytangyuan/dml), which will be maintained actively)
+## Note: This package has been moved to a [new package](https://github.com/terrytangyuan/dml), which will be maintained actively.
 
 ## Introduction
 
@@ -40,18 +40,10 @@ Algorithms planned in the first development stage:
 
 The algorithms and routines might be adjusted during developing.
 
-## Links
-
-GitHub: https://github.com/road2stat/sdml
-
-Report Bugs: https://github.com/road2stat/sdml/issues
-
 ## Contact
 
-Contact the authors of this package:
+Contact authors of this package:
 
-Tao Gao <joegaotao@gmail.com>
-
-Nan Xiao <road2stat@gmail.com>
-
-Yuan Tang <terrytangyuan@gmail.com>
+- Tao Gao <joegaotao@gmail.com>
+- Nan Xiao <me@nanx.me>
+- Yuan Tang <terrytangyuan@gmail.com>

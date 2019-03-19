@@ -37,7 +37,7 @@
 #'
 #' @note Put some note here.
 #'
-#' @author Xiao Nan <\url{http://www.road2stat.com}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{kmatrixGauss}} for the Gaussian kernel computation,
 #'          and \code{\link{dca}} for the linear version of DCA.
